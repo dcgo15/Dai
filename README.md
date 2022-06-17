@@ -1,5 +1,5 @@
 # Dai
-Projeto de uma inteligencia artificial de integraçao com a biblioteca: Potato
+Projeto de machine learning integrado com a biblioteca: thepotato e futuramente uma IA com funções mais abrangentes  
 
 # O que irá fazer?  
 
