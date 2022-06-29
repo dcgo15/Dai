@@ -48,19 +48,16 @@ while True:
         break
 
     if quest == "1":
-        with open(textfile) as fp:
-            mensagem = EmailMessage()
-            mensagem.set_content(fp.read())
-
-        meu = input("Seu email: ")
-        seu = input("Email do destinatario: ")
-
-        mensagem["Subject"] = f"O conteudo é {textfile}"
-        mensagem["From"] = meu
-        mensagem["To"] = seu
-
-        s = smtplib.SMTP("localhost")
-        s.send_message(mensagem)
+        s = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        email = input("Digite seu email: ")
+        senha = input("Digite sua senha: ")
+        dest = input("Digite o email do destinatario: ")
+        cont = input("Digite o conteudo da mensagem: ")
+        s.login(email, senha)
+        s.sendmail(
+            email,
+            dest,
+            cont)
         s.quit()
         
     ##################

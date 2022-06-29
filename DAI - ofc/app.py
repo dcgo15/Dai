@@ -6,9 +6,15 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty,NumericProperty,BooleanProperty
 from gtts import gTTS
 import speech_recognition as sr
+import os
+import datetime
+import requests
+
+#############
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import os
+#############
+
 
 arq_kv = '''
 <Telas>:
@@ -35,7 +41,7 @@ arq_kv = '''
 
         ActionView:
             ActionPrevious:
-                title: "DAI"
+                title: "DAI - v1.1.2"
                 app_icon: ''
                 with_previous: False
 
@@ -53,14 +59,13 @@ arq_kv = '''
         id: "layout"
         cols: 1
         spacing: 30
-        padding: [80, 40]
-
-        Label:
-            text: ""
+        padding: [80, 120]
 
         Button:
-            text: "Clique aqui"
-            size_hint: .2, 1
+            background_normal: "voice.png"
+            background_down: "voice.png"
+            border: 0, 0, 0, 0
+            size_hint: .8, 1
             on_release: root.clicar()
 
         Label:
@@ -182,35 +187,37 @@ class Inicio(Screen):
 
         #TENHO QUE USAR VOZES PARA RESPONDER
 
-        if frase == "0":
-            print("OK, MODO: MANDAR MENSAGENS ATIVADO")
+        if frase == "horas":
+            print("OK, MODO: CONSULTAR HORARIO ATIVADO")
 
-        elif frase == "1":
-            print("OK, MODO: MANDAR EMAIL ATIVADO")
+            print(datetime.datetime.now())
 
-        elif frase == "pesquisar":
-            #PESQUISAR GLOBALIZAÇÃO
-            print("OK, MODO: PESQUISAR ATIVADO")
+        elif frase == "tempo":
+            print("OK, MODO: CLIMA ATIVADO")
 
-            chrome_options = Options()
-            #chrome_options.add_argument("--headless")
+            link = "https://api.hgbrasil.com/weather?woeid=455860"
 
-            dv = webdriver.Chrome(executable_path=r"C:\Users\WIN7\AppData\Local\Programs\Python\Python38-32\Scripts\Interfaces Graficas Py\DAI - ofc\chromedriver_win32\chromedriver.exe")
-            dv.get("https://www.google.com/")
+            resposta = requests.get(link)
+            content = resposta.json()
 
-            e = driver.find_element_by_class_name("gLFyf gsfi")
-            e.send_keys("car")
-
-            button = driver.find_element_by_class_name("iblpc")
-            button.click()
+            tempo = content["results"]["temp"]
+            print(tempo, "C")
 
             
 
-        elif frase == "3":
-            print("OK, MODO: REALIZAR OPERAÇÕES ATIVADO")
+        elif frase == "Google":
+            #PESQUISAR GLOBALIZAÇÃO
+            print("OK, MODO: PESQUISAR ATIVADO")
 
-        elif frase == "4":
-            print("OK, MODO: FAZER TAREFAS ATIVADO")
+            os.startfile("C:\Program Files\Google\Chrome\Application\chrome.exe")
+
+            
+
+        elif frase == "calcular":
+            print("OK, MODO: CALCULAR ATIVADO")
+
+            os.startfile("C:\Windows\System32\calc.exe")
+        
 
         else:
             print("NÃO ENTENDI")
