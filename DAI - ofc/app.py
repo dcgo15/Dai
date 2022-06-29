@@ -9,6 +9,7 @@ import speech_recognition as sr
 import os
 import datetime
 import requests
+from playsound import playsound
 
 #############
 from selenium import webdriver
@@ -41,7 +42,7 @@ arq_kv = '''
 
         ActionView:
             ActionPrevious:
-                title: "DAI - v1.1.2"
+                title: "DAI - v1.2.2"
                 app_icon: ''
                 with_previous: False
 
@@ -163,6 +164,11 @@ class Telas(ScreenManager):
 
 class Inicio(Screen):
 
+    tts = gTTS("Olá Daniel", lang="pt-br")
+
+    tts.save("ola.mp3")
+    playsound("ola.mp3")
+
     def clicar(self):
 
         mic = sr.Recognizer()
@@ -187,13 +193,21 @@ class Inicio(Screen):
 
         #TENHO QUE USAR VOZES PARA RESPONDER
 
-        if frase == "horas":
-            print("OK, MODO: CONSULTAR HORARIO ATIVADO")
-
+        if frase == "DAE horas":
+            h = "OK, MODO: CONSULTAR HORARIO ATIVADO"
+            fala = gTTS(h, lang="pt-br")
+            fala.save("fala.mp3")
+            playsound("fala.mp3")
+            
             print(datetime.datetime.now())
 
-        elif frase == "tempo":
-            print("OK, MODO: CLIMA ATIVADO")
+
+        elif frase == "DAE tempo":
+            c = "OK, MODO: CLIMA ATIVADO"
+
+            fala2 = gTTS(c, lang="pt-br")
+            fala2.save("fala2.mp3")
+            playsound("fala2.mp3")
 
             link = "https://api.hgbrasil.com/weather?woeid=455860"
 
@@ -204,17 +218,24 @@ class Inicio(Screen):
             print(tempo, "C")
 
             
-
-        elif frase == "Google":
+        
+        elif "DAE Google" or "dai google" in frase:
             #PESQUISAR GLOBALIZAÇÃO
-            print("OK, MODO: PESQUISAR ATIVADO")
+            g = "OK, MODO: PESQUISAR ATIVADO"
+
+            fala3 = gTTS(g, lang="pt-br")
+            fala3.save("fala3.mp3")
+            playsound("fala3.mp3")
 
             os.startfile("C:\Program Files\Google\Chrome\Application\chrome.exe")
 
-            
 
-        elif frase == "calcular":
-            print("OK, MODO: CALCULAR ATIVADO")
+        elif frase == "DAE calcular":
+            ca = "OK, MODO: CALCULAR ATIVADO"
+
+            fala4 = gTTS(ca, lang="pt-br")
+            fala.save("fala4.mp3")
+            playsound("fala4.mp3")
 
             os.startfile("C:\Windows\System32\calc.exe")
         
