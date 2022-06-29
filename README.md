@@ -1,6 +1,9 @@
 # Dai
 Projeto de machine learning integrado com a biblioteca: thepotato e futuramente uma IA com funções mais abrangentes  
 
+![image](https://user-images.githubusercontent.com/76263577/176509188-3c3abe65-593a-4982-b694-1a30a4640d92.png)
+
+
 # O que irá fazer?  
 
 - Prever preços de commodities - Principal objetivo  
