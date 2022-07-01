@@ -1,5 +1,5 @@
 # Dai
-Projeto  de uma assistente pessoal, não seria bem uma IA , já que não prever oq vou falar ou crie possibilidades e sim 
+Projeto  de uma assistente pessoal, não seria bem uma IA , já que não prever oq vou falar ou criar possibilidades e sim 
 uma aplicação baseada em condições e opções já escritas
 
 ![image](https://user-images.githubusercontent.com/76263577/176509188-3c3abe65-593a-4982-b694-1a30a4640d92.png)
