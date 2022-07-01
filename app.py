@@ -10,11 +10,21 @@ import os
 import datetime
 import requests
 from playsound import playsound
+import wikipedia
 
 #############
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 #############
+
+'''
+EU QUERO QUE ELA PESQUISE NO WIKIPEDIA:
+
+- frase que tem que ser oq eu falo , um comando
+- pesquisa que tem que ser meu segundo comando
+
+ENTÃO OK , SE EU JUNTAR 2 STRINGS ELAS OBRIGATORIAMENTE DEVEM FICAR JUNTAS
+'''
 
 
 arq_kv = '''
@@ -165,7 +175,7 @@ class Telas(ScreenManager):
 class Inicio(Screen):
 
 
-    tts = gTTS("Olá Daniel, como vai?", lang="pt-br")
+    tts = gTTS("Olá Daniel", lang="pt-br")
 
     tts.save("ola.mp3")
     playsound("ola.mp3")
@@ -191,8 +201,10 @@ class Inicio(Screen):
         except sr.UnkownValueError:
             print("Não entendi")
 
-
-        #TENHO QUE USAR VOZES PARA RESPONDER
+        ###########################
+        #################LISTAKKKKK
+        lista = ["carro", "ovo", "braço"]
+        ###########################
 
         if frase == "DAE":
             s = "Sim?"
@@ -201,7 +213,7 @@ class Inicio(Screen):
             sim.save("sim.mp3")
             playsound("sim.mp3")
 
-        elif frase == "DAE horas":
+        elif frase == "As horas":
             h = "Consultando horario , Daniel"
             fala = gTTS(h, lang="pt-br")
             fala.save("fala.mp3")
@@ -210,7 +222,7 @@ class Inicio(Screen):
             print(datetime.datetime.now())
 
 
-        elif frase == "DAE tempo":
+        elif frase == "tempo":
             c = "Consultando o tempo , Daniel"
 
             fala2 = gTTS(c, lang="pt-br")
@@ -227,8 +239,8 @@ class Inicio(Screen):
 
             
         
-        elif frase == "DAE Google":
-            #PESQUISAR GLOBALIZAÇÃO
+        elif frase == "Abrir Google":
+
             g = "Abrindo google , Daniel"
 
             fala3 = gTTS(g, lang="pt-br")
@@ -238,7 +250,7 @@ class Inicio(Screen):
             os.startfile("C:\Program Files\Google\Chrome\Application\chrome.exe")
 
 
-        elif frase == "DAE calcular":
+        elif frase == "Abrir calculadora":
             ca = "Abrindo calculadora, Daniel"
 
             fala4 = gTTS(ca, lang="pt-br")
@@ -246,6 +258,28 @@ class Inicio(Screen):
             playsound("fala4.mp3")
 
             os.startfile("C:\Windows\System32\calc.exe")
+
+        elif frase == "Abrir comando":
+            co = "Abrindo comando, Daniel"
+
+            fala5 = gTTS(co, lang="pt-br")
+            fala5.save("fala5.mp3")
+            playsound("fala5.mp3")
+
+            os.startfile("C:\Windows\System32\cmd.exe")
+
+        elif frase in lista:
+            pesqui = "Ok, pesquisando..."
+
+            fala6 = gTTS(pesqui, lang="pt-br")
+            fala6.save("fala6.mp3")
+            playsound("fala6.mp3")
+
+            wikipedia.set_lang("pt")
+            pesq = wikipedia.summary(frase)
+            print(pesq)
+
+
         
 
         else:
