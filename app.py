@@ -11,6 +11,7 @@ import datetime
 import requests
 from playsound import playsound
 import wikipedia
+from hunspell import Hunspell
 
 #############
 from selenium import webdriver
@@ -52,7 +53,7 @@ arq_kv = '''
 
         ActionView:
             ActionPrevious:
-                title: "DAI - v1.2.2"
+                title: "DAI - v1.4.1"
                 app_icon: ''
                 with_previous: False
 
@@ -175,7 +176,7 @@ class Telas(ScreenManager):
 class Inicio(Screen):
 
 
-    tts = gTTS("Olá Daniel", lang="pt-br")
+    tts = gTTS("Olá ... Daniel", lang="pt-br")
 
     tts.save("ola.mp3")
     playsound("ola.mp3")
@@ -203,18 +204,23 @@ class Inicio(Screen):
 
         ###########################
         #################LISTAKKKKK
-        lista = ["carro", "ovo", "braço"]
+        dic = Hunspell('Portuguese(Brazilian)', hunspell_data_dir = r'C:\Users\WIN7\AppData\Local\Programs\Python\Python38-32\Scripts\Interfaces Graficas Py\DAI - ofc\Dicionarios')
+
+        saud = ["DAE", "dai", "dae", "DAI"]
+        funcao = ["tempo", "Tempo", "as horas", "As horas", "Abrir Google",
+                  "abrir google", "abrir calculadora", "Abrir Calculadora",
+                  "abrir comando", "Abrir comando"]
         ###########################
 
-        if frase == "DAE":
-            s = "Sim?"
+        if frase in saud:
+            s = "Sim, em que posso ajudar?"
 
-            sim = gTTS(S, lang="pt-br")
+            sim = gTTS(s, lang="pt-br")
             sim.save("sim.mp3")
             playsound("sim.mp3")
 
-        elif frase == "As horas":
-            h = "Consultando horario , Daniel"
+        elif frase in funcao:
+            h = "Consultando horario ... Daniel"
             fala = gTTS(h, lang="pt-br")
             fala.save("fala.mp3")
             playsound("fala.mp3")
@@ -222,8 +228,8 @@ class Inicio(Screen):
             print(datetime.datetime.now())
 
 
-        elif frase == "tempo":
-            c = "Consultando o tempo , Daniel"
+        elif frase in funcao:
+            c = "Consultando o tempo ... Daniel"
 
             fala2 = gTTS(c, lang="pt-br")
             fala2.save("fala2.mp3")
@@ -236,12 +242,11 @@ class Inicio(Screen):
 
             tempo = content["results"]["temp"]
             print(tempo, "C em Feira de Santana")
-
             
         
-        elif frase == "Abrir Google":
+        elif frase in funcao:
 
-            g = "Abrindo google , Daniel"
+            g = "Abrindo google ... Daniel"
 
             fala3 = gTTS(g, lang="pt-br")
             fala3.save("fala3.mp3")
@@ -250,8 +255,8 @@ class Inicio(Screen):
             os.startfile("C:\Program Files\Google\Chrome\Application\chrome.exe")
 
 
-        elif frase == "Abrir calculadora":
-            ca = "Abrindo calculadora, Daniel"
+        elif frase in funcao:
+            ca = "Abrindo calculadora ... Daniel"
 
             fala4 = gTTS(ca, lang="pt-br")
             fala4.save("fala4.mp3")
@@ -259,8 +264,8 @@ class Inicio(Screen):
 
             os.startfile("C:\Windows\System32\calc.exe")
 
-        elif frase == "Abrir comando":
-            co = "Abrindo comando, Daniel"
+        elif frase in funcao:
+            co = "Abrindo comando ... Daniel"
 
             fala5 = gTTS(co, lang="pt-br")
             fala5.save("fala5.mp3")
@@ -268,8 +273,8 @@ class Inicio(Screen):
 
             os.startfile("C:\Windows\System32\cmd.exe")
 
-        elif frase in lista:
-            pesqui = "Ok, pesquisando..."
+        elif dic.spell(frase) == True:
+            pesqui = "Ok, pesquisando ... Daniel"
 
             fala6 = gTTS(pesqui, lang="pt-br")
             fala6.save("fala6.mp3")
@@ -283,7 +288,7 @@ class Inicio(Screen):
         
 
         else:
-            dese = "Não entendi , Daniel . Poderia repetir?"
+            dese = "Não entendi ... Daniel . Poderia repetir?"
 
             de = gTTS(dese, lang="pt-br")
             de.save("desen.mp3")
@@ -309,3 +314,7 @@ class DAI(App):
         return Telas()
 
 DAI().run()
+
+########################
+# O TESTE FOI UM SUCESSO
+########################
