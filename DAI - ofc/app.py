@@ -10,11 +10,22 @@ import os
 import datetime
 import requests
 from playsound import playsound
+import wikipedia
+from hunspell import Hunspell
 
 #############
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 #############
+
+'''
+EU QUERO QUE ELA PESQUISE NO WIKIPEDIA:
+
+- frase que tem que ser oq eu falo , um comando
+- pesquisa que tem que ser meu segundo comando
+
+ENTÃO OK , SE EU JUNTAR 2 STRINGS ELAS OBRIGATORIAMENTE DEVEM FICAR JUNTAS
+'''
 
 
 arq_kv = '''
@@ -42,7 +53,7 @@ arq_kv = '''
 
         ActionView:
             ActionPrevious:
-                title: "DAI - v1.2.2"
+                title: "DAI - v1.4.1"
                 app_icon: ''
                 with_previous: False
 
@@ -164,7 +175,8 @@ class Telas(ScreenManager):
 
 class Inicio(Screen):
 
-    tts = gTTS("Olá Daniel", lang="pt-br")
+
+    tts = gTTS("Olá ... Daniel", lang="pt-br")
 
     tts.save("ola.mp3")
     playsound("ola.mp3")
@@ -190,11 +202,20 @@ class Inicio(Screen):
         except sr.UnkownValueError:
             print("Não entendi")
 
+        ###########################
+        #################LISTAKKKKK
+        dic = Hunspell('Portuguese(Brazilian)', hunspell_data_dir = r'C:\Users\WIN7\AppData\Local\Programs\Python\Python38-32\Scripts\Interfaces Graficas Py\DAI - ofc\Dicionarios')
+        ###########################
 
-        #TENHO QUE USAR VOZES PARA RESPONDER
+        if frase == "DAE":
+            s = "Sim?"
 
-        if frase == "DAE horas":
-            h = "OK, MODO: CONSULTAR HORARIO ATIVADO"
+            sim = gTTS(S, lang="pt-br")
+            sim.save("sim.mp3")
+            playsound("sim.mp3")
+
+        elif frase == "as horas":
+            h = "Consultando horario ... Daniel"
             fala = gTTS(h, lang="pt-br")
             fala.save("fala.mp3")
             playsound("fala.mp3")
@@ -202,8 +223,8 @@ class Inicio(Screen):
             print(datetime.datetime.now())
 
 
-        elif frase == "DAE tempo":
-            c = "OK, MODO: CLIMA ATIVADO"
+        elif frase == "tempo":
+            c = "Consultando o tempo ... Daniel"
 
             fala2 = gTTS(c, lang="pt-br")
             fala2.save("fala2.mp3")
@@ -215,13 +236,12 @@ class Inicio(Screen):
             content = resposta.json()
 
             tempo = content["results"]["temp"]
-            print(tempo, "C")
-
+            print(tempo, "C em Feira de Santana")
             
         
-        elif "DAE Google" or "dai google" in frase:
-            #PESQUISAR GLOBALIZAÇÃO
-            g = "OK, MODO: PESQUISAR ATIVADO"
+        elif frase == "Abrir Google":
+
+            g = "Abrindo google ... Daniel"
 
             fala3 = gTTS(g, lang="pt-br")
             fala3.save("fala3.mp3")
@@ -230,18 +250,44 @@ class Inicio(Screen):
             os.startfile("C:\Program Files\Google\Chrome\Application\chrome.exe")
 
 
-        elif frase == "DAE calcular":
-            ca = "OK, MODO: CALCULAR ATIVADO"
+        elif frase == "Abrir calculadora":
+            ca = "Abrindo calculadora ... Daniel"
 
             fala4 = gTTS(ca, lang="pt-br")
-            fala.save("fala4.mp3")
+            fala4.save("fala4.mp3")
             playsound("fala4.mp3")
 
             os.startfile("C:\Windows\System32\calc.exe")
+
+        elif frase == "Abrir comando":
+            co = "Abrindo comando ... Daniel"
+
+            fala5 = gTTS(co, lang="pt-br")
+            fala5.save("fala5.mp3")
+            playsound("fala5.mp3")
+
+            os.startfile("C:\Windows\System32\cmd.exe")
+
+        elif dic.spell(frase) == True:
+            pesqui = "Ok, pesquisando ... Daniel"
+
+            fala6 = gTTS(pesqui, lang="pt-br")
+            fala6.save("fala6.mp3")
+            playsound("fala6.mp3")
+
+            wikipedia.set_lang("pt")
+            pesq = wikipedia.summary(frase)
+            print(pesq)
+
+
         
 
         else:
-            print("NÃO ENTENDI")
+            dese = "Não entendi ... Daniel . Poderia repetir?"
+
+            de = gTTS(dese, lang="pt-br")
+            de.save("desen.mp3")
+            playsound("desen.mp3")
 
 
         return frase
@@ -263,3 +309,7 @@ class DAI(App):
         return Telas()
 
 DAI().run()
+
+########################
+# O TESTE FOI UM SUCESSO
+########################
